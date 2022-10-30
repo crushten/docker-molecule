@@ -4,24 +4,8 @@ name: Docker Scan
 on:
   schedule:
   - cron: '0 3 * * *'
-  workflow_call:
-    
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   scan:
     name: Docker Scheduled Scan
-    runs-on: ubuntu-20.04
-    steps:
-    - name: Run Aqua Security Trivy
-      uses: aquasecurity/trivy-action@0.7.1
-      with:
-        image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main'
-        format: 'table'
-        exit-code: "1"
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL,HIGH,MEDIUM,LOW'
+    uses:  crushten/github_workflow_repo/.github/workflows/docker_scan.yml@main

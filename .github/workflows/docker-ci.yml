@@ -9,22 +9,14 @@ on:
 jobs:
   lint:
     name: Docker Lint
-    runs-on: ubuntu-20.04
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v3.1.0
-      
-      - uses: hadolint/hadolint-action@v2.1.0
-        with:
-          dockerfile: Dockerfile
+    uses: crushten/github_workflow_repo/.github/workflows/docker_lint.yml@main
   
   build:
     name: Docker Build
     needs: lint
-    uses: ./.github/workflows/docker-release.yml
+    uses: crushten/github_workflow_repo/.github/workflows/docker_build.yml@main
 
   scan:
     name: Docker Scan
     needs: build
-    uses: ./.github/workflows/docker-scan.yml
+    uses: crushten/github_workflow_repo/.github/workflows/docker_scan.yml@main
