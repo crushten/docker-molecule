@@ -1,0 +1,27 @@
+name: Docker Scan
+
+# The scheduled workflow runs every day at 03:00 UTC time.
+on:
+  schedule:
+  - cron: '0 3 * * *'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  docker-scan:
+    name: Docker Scheduled Scan
+    needs: docker-build
+    runs-on: ubuntu-20.04
+    steps:
+
+    - name: Run Aqua Security Trivy
+      uses: aquasecurity/trivy-action@0.7.1
+      with:
+        image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}'
+        format: 'table'
+        exit-code: "1"
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH,MEDIUM,LOW'
