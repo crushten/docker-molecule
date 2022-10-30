@@ -2,6 +2,10 @@ name: Docker Scan
 
 # The scheduled workflow runs every day at 03:00 UTC time.
 on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   schedule:
   - cron: '0 3 * * *'
 

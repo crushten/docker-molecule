@@ -20,7 +20,11 @@ jobs:
           dockerfile: Dockerfile
   
   build:
-    uses: ./docker-release.yml
+    name: Docker Build
+    needs: lint
+    uses: ./.github/workflows/docker-release.yml
 
   scan:
-    uses: ./docker-scan.yml
+    name: Docker Scan
+    needs: build
+    uses: ./.github/workflows/docker-scan.yml
