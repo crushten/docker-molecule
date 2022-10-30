@@ -8,18 +8,18 @@ on:
     branches: [ main ]
   schedule:
   - cron: '0 3 * * *'
+  workflow_call:
+    
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  docker-scan:
+  scan:
     name: Docker Scheduled Scan
-    needs: docker-build
     runs-on: ubuntu-20.04
     steps:
-
     - name: Run Aqua Security Trivy
       uses: aquasecurity/trivy-action@0.7.1
       with:
