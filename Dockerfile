@@ -16,6 +16,9 @@ FROM python:3.10-slim-bullseye
 
 RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 
+# fixes CVE-2022-40897
+RUN pip install setuptools>=65.5.1
+
 COPY --from=build /opt/venv /opt/venv
 
 # Make sure we use the virtualenv:
