@@ -3,3 +3,4 @@ molecule-docker == 2.1.0
 ansible-core == 2.14.1
 ansible-lint == 6.10.0
 yamllint == 1.28.0
+setuptools >= 65.5.1
