@@ -4,8 +4,10 @@ FROM python:3.10-bullseye AS build
 # hadolint ignore=DL3008
 RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends build-essential gcc && rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m venv /opt/venv
-# Make sure we use the virtualenv:
+# fixes CVE-2022-40897
+# hadolint ignore=DL3013
+RUN pip install --no-cache-dir setuptools>=65.5.1 && python3 -m venv /opt/venv
+
 ENV PATH="/opt/venv/bin:$PATH"
 
 # hadolint ignore=DL3045
@@ -22,5 +24,4 @@ RUN pip install --no-cache-dir setuptools>=65.5.1
 
 COPY --from=build /opt/venv /opt/venv
 
-# Make sure we use the virtualenv:
 ENV PATH="/opt/venv/bin:$PATH"
